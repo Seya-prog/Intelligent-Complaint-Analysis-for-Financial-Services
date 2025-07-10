@@ -3,7 +3,7 @@ RAG pipeline that combines retrieval and generation.
 """
 import logging
 from pathlib import Path
-from typing import Optional, List
+from typing import Optional, List, Iterator
 
 from .retriever import Retriever
 from .generator import Generator, GeneratorConfig
@@ -61,4 +61,24 @@ class RAGPipeline:
         response = self.generator.generate(chunks=chunks, question=query)
         logger.info("Generated response successfully")
         
-        return response 
+        return response
+        
+    def stream_process_query(self, query: str, num_chunks: int = 5) -> Iterator[str]:
+        """Process a query through the RAG pipeline with streaming response.
+        
+        Args:
+            query: The query to process
+            num_chunks: Number of chunks to retrieve
+            
+        Yields:
+            Generated response tokens/deltas based on retrieved context
+        """
+        logger.info(f"Processing query with streaming: {query}")
+        
+        # Retrieve relevant chunks
+        chunks = self.retriever.retrieve(query, k=num_chunks)
+        logger.info(f"Retrieved {len(chunks)} relevant chunks")
+        
+        # Stream generate response
+        for token in self.generator.stream_generate(chunks=chunks, question=query):
+            yield token 

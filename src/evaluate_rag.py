@@ -37,15 +37,10 @@ def main():
     results = []
     for question in tqdm(TEST_QUESTIONS, desc="Processing questions"):
         try:
-            # Retrieve chunks and generate response to capture sources
-            chunks = pipeline.retriever.retrieve(question, k=5)
-            response = pipeline.generator.generate(question=question, chunks=chunks)
-            # Take up to first 2 chunk contents as retrieved sources
-            retrieved_sources = " || ".join(chunk.content.replace("\n", " ")[:300] for chunk in chunks[:2])
+            response = pipeline.process_query(str(question))
             results.append({
                 "question": question,
                 "response": response,
-                "retrieved_sources": retrieved_sources,
                 "status": "success"
             })
         except Exception as e:
