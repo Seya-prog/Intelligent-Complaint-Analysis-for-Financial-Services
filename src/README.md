@@ -1,47 +1,62 @@
-# Scripts Directory
+# Source Code Directory
 
-This directory contains Python scripts for the Intelligent Complaint Analysis project.
+This directory contains the core implementation of the Intelligent Complaint Analysis system.
 
-## Structure
+## Directory Structure
 
-- `preprocessing/`: Contains scripts for data preprocessing
-  - `data_loader.py`: Functions to load and validate the CFPB dataset
-  - `text_cleaner.py`: Functions to clean and normalize complaint text
-  - `data_filter.py`: Functions to filter the dataset by product categories
-  
-- `embedding/`: Contains scripts for text embedding and chunking
-  - `text_chunker.py`: Functions to split long narratives into chunks
-  - `embedder.py`: Functions to generate embeddings from text
-  
-- `vector_db/`: Contains scripts for vector database operations
-  - `db_manager.py`: Functions to create and manage the vector database
-  - `indexer.py`: Functions to index embeddings in the vector database
-  - `retriever.py`: Functions to retrieve relevant documents from the vector database
-  
-- `rag/`: Contains scripts for the RAG agent
-  - `agent.py`: Implementation of the RAG agent
-  - `prompt_templates.py`: Templates for LLM prompts
-  - `llm_interface.py`: Interface to the language model
-  
-- `api/`: Contains scripts for the API and interface
-  - `app.py`: Streamlit application for the user interface
-  - `api.py`: FastAPI implementation for the backend API
+### `text_processing/`
+Text processing utilities for the RAG pipeline:
+- `chunking.py`: Document chunking strategies
+- `embedding.py`: Text embedding generation
+- `vector_store.py`: Vector storage and retrieval
 
-## Usage
+### `rag/`
+RAG pipeline implementation:
+- `generator.py`: Response generation using LLM
+- `pipeline.py`: Main RAG pipeline orchestration
+- `retriever.py`: Context retrieval from vector store
 
-Most scripts are designed to be imported as modules, but some can be run directly:
+### Core Scripts
+- `evaluate_rag.py`: Evaluation tools and metrics
+- `process_complaints.py`: Complaint data processing utilities
 
-```
-# Run the data preprocessing pipeline
-python scripts/preprocessing/run_pipeline.py
+## Implementation Details
 
-# Start the Streamlit interface
-python scripts/api/app.py
-```
+### Text Processing
+- Implements efficient document chunking strategies
+- Handles text embedding generation using transformer models
+- Manages vector storage and similarity search
+
+### RAG Pipeline
+- Retrieves relevant context based on user queries
+- Generates responses using retrieved context
+- Ensures responses are grounded in actual complaint data
+
+### Evaluation
+The evaluation system measures:
+- Response accuracy and relevance
+- Context retrieval quality
+- Response completeness
+- Source citation accuracy
 
 ## Development Guidelines
 
-1. Follow PEP 8 style guidelines
-2. Add docstrings to all functions and classes
-3. Include type hints for function parameters and return values
-4. Write unit tests for all functions in the `test/` directory 
+1. Code Style
+   - Follow PEP 8 guidelines
+   - Use type hints for all functions
+   - Add docstrings for all modules and functions
+
+2. Testing
+   - Write unit tests for new functionality
+   - Ensure tests pass before committing
+   - Use pytest for testing
+
+3. Documentation
+   - Keep README files updated
+   - Document complex algorithms
+   - Include usage examples
+
+4. Version Control
+   - Create feature branches for new work
+   - Write clear commit messages
+   - Review code before merging 
